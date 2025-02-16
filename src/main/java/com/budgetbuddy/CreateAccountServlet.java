@@ -1,4 +1,5 @@
-package com.financetracker.personalfinancetracker;
+package com.budgetbuddy;
+
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -12,6 +13,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import utils.DBConnection;
 
 public class CreateAccountServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
@@ -31,8 +33,7 @@ public class CreateAccountServlet extends HttpServlet {
         ResultSet resultSet = null;
 
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/finance_tracker_db", "root", "root");
+            connection = DBConnection.getConnection();
 
             // Insert the new account
             String sql = "INSERT INTO tbl_accounts (user_id, account_type, balance, currency_type) VALUES (?, ?, ?, ?)";

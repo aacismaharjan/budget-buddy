@@ -1,9 +1,10 @@
-package com.financetracker.personalfinancetracker;
+package com.budgetbuddy;
 
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import jakarta.servlet.ServletException;
@@ -11,44 +12,52 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import utils.DBConnection;
 
-//@WebServlet("/register")
-public class RegisterServlet extends HttpServlet {
+
+public class LoginServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String name = request.getParameter("name");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        String contactNumber = request.getParameter("contact_number");
-        String address = request.getParameter("address");
 
         Connection connection = null;
         PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
 
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/finance_tracker_db", "root", "root");
+            connection = DBConnection.getConnection();
 
-            String sql = "INSERT INTO tbl_users (name, email, password, contact_number, address) VALUES (?, ?, ?, ?, ?)";
+            String sql = "SELECT * FROM tbl_users WHERE email = ? AND password = ?";
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, name);
-            preparedStatement.setString(2, email);
-            preparedStatement.setString(3, password);
-            preparedStatement.setString(4, contactNumber);
-            preparedStatement.setString(5, address);
+            preparedStatement.setString(1, email);
+            preparedStatement.setString(2, password);
+            resultSet = preparedStatement.executeQuery();
 
-            int result = preparedStatement.executeUpdate();
-
-            if (result > 0) {
-                response.getWriter().println("User registered successfully!");
+            if (resultSet.next()) {
+                // Successful login
+                HttpSession session = request.getSession();
+                session.setAttribute("user", email);
+                session.setAttribute("user_id", resultSet.getInt("user_id"));
+                session.setAttribute("fullname", resultSet.getString("name"));
+                response.sendRedirect("dashboard.jsp");
             } else {
-                response.getWriter().println("User registration failed!");
+                // Login failed
+                response.getWriter().println("Invalid email or password");
             }
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
             response.getWriter().println("Error: " + e.getMessage());
         } finally {
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
             if (preparedStatement != null) {
                 try {
                     preparedStatement.close();

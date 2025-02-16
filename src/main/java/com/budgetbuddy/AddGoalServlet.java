@@ -1,4 +1,4 @@
-package com.financetracker.personalfinancetracker;
+package com.budgetbuddy;
 
 
 import java.io.IOException;
@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import utils.DBConnection;
 
 public class AddGoalServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
@@ -21,19 +22,20 @@ public class AddGoalServlet extends HttpServlet {
         int user_id = (int) session.getAttribute("user_id");
         String targetAmount = request.getParameter("target_amount");
         String description = request.getParameter("description");
-
+        String currentAmount = request.getParameter("current_amount");
+        
         Connection connection = null;
         PreparedStatement preparedStatement = null;
 
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/finance_tracker_db", "root", "root");
+            connection = DBConnection.getConnection();
 
-            String sql = "INSERT INTO tbl_goals (target_amount, description, user_id) VALUES (?, ?, ?)";
+            String sql = "INSERT INTO tbl_goals (target_amount, current_amount, description, user_id) VALUES (?, ?, ?, ?)";
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setBigDecimal(1, new java.math.BigDecimal(targetAmount));
-            preparedStatement.setString(2, description);
-            preparedStatement.setInt(3, user_id);
+            preparedStatement.setBigDecimal(2,  new java.math.BigDecimal(currentAmount));
+            preparedStatement.setString(3, description);
+            preparedStatement.setInt(4, user_id);
 
             int result = preparedStatement.executeUpdate();
 

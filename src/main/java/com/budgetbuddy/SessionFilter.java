@@ -1,4 +1,4 @@
-package com.financetracker.personalfinancetracker;
+package com.budgetbuddy;
 
 import java.io.IOException;
 import java.util.Arrays;

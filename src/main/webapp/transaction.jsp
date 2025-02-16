@@ -4,6 +4,7 @@
 <%@ page import="java.sql.PreparedStatement"%>
 <%@ page import="java.sql.ResultSet"%>
 <%@ page import="java.sql.SQLException"%>
+<%@ page import="utils.DBConnection"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -57,9 +58,7 @@
                         int user_id = (int) session.getAttribute("user_id");
                     
                         try {
-                            // Connect to the database
-                            Class.forName("com.mysql.cj.jdbc.Driver");
-                            connection = DriverManager.getConnection(dbURL, dbUser, dbPassword);
+                            connection = DBConnection.getConnection();
                     
                             // Query to fetch categories from the database
                             String sql = "SELECT category_id, category_name FROM tbl_categories";
@@ -129,9 +128,7 @@
 								class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
 								<%
                         try {
-                            // Connect to the database
-                            Class.forName("com.mysql.cj.jdbc.Driver");
-                            connection = DriverManager.getConnection(dbURL, dbUser, dbPassword);
+                            connection = DBConnection.getConnection();
                     
                             // Query to fetch accounts from the database
                             String sql = "SELECT account_id, account_type FROM tbl_accounts WHERE user_id = ?";

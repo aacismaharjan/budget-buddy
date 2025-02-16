@@ -1,3 +1,4 @@
+<%@page import="utils.DBConnection"%>
 <%@ page session="true" %>
 <%@ page import="java.sql.Connection" %>
 <%@ page import="java.sql.DriverManager" %>
@@ -36,6 +37,7 @@
                     </tr>
                 </thead>
                 <tbody>
+                
                     <%
                         Connection connection = null;
                         PreparedStatement preparedStatement = null;
@@ -43,8 +45,7 @@
                         int user_id = (int) session.getAttribute("user_id");
 
                         try {
-                            Class.forName("com.mysql.cj.jdbc.Driver");
-                            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/finance_tracker_db", "root", "root");
+                            connection = DBConnection.getConnection();
 
                             // Retrieve transactions for the current user
                             String sql = "SELECT * FROM tbl_transactions t INNER JOIN tbl_categories c ON c.category_id = t.category_id INNER JOIN tbl_accounts ac ON ac.account_id = t.account_id WHERE t.account_id IN (SELECT account_id FROM tbl_accounts WHERE user_id = ?)";
@@ -62,6 +63,7 @@
                                 String type = resultSet.getString("type");
                                 String modeOfPayment = resultSet.getString("mode_of_payment");
                                 String accountType = resultSet.getString("account_type");
+                            	String colorName = "Income".equals(type) ? "green" : "red";
                     %>
                                 <tr class="border">
                                     <td class="px-4 py-2 border"><%= transactionId %></td>
@@ -69,7 +71,7 @@
                                     <td class="px-4 py-2 border"><%= amount %></td>
                                     <td class="px-4 py-2 border"><%= description %></td>
                                     <td class="px-4 py-2 border"><%= category %></td>
-                                    <td class="px-4 py-2 border"><%= type %></td>
+                                    <td class="px-4 py-2 border"><span class="inline-flex items-center rounded-md bg-<%= colorName %>-50 px-2 py-1 text-xs font-medium text-<%= colorName %>-700 ring-1 ring-inset ring-<%= colorName %>-600/20"><%= type %></span></td>
                                     <td class="px-4 py-2 border"><%= modeOfPayment %></td>
                                     <td class="px-4 py-2 border"><%= accountType %></td>
                                 </tr>

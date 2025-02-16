@@ -1,4 +1,4 @@
-package com.financetracker.personalfinancetracker;
+package com.budgetbuddy;
 
 import java.io.IOException;
 import java.sql.CallableStatement;
@@ -11,21 +11,12 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import utils.DBConnection;
 
 public class TransactionServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession(false);
-
-        // Check if session exists and user ID is available
-        if (session == null || session.getAttribute("user_id") == null) {
-            response.sendRedirect("login.jsp");
-            return;
-        }
-
-        int userId = (int) session.getAttribute("user_id");
-
         String date = request.getParameter("date");
         double amount = Double.parseDouble(request.getParameter("amount"));
         String description = request.getParameter("description");
@@ -38,8 +29,7 @@ public class TransactionServlet extends HttpServlet {
         CallableStatement callableStatement = null;
 
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/finance_tracker_db", "root", "root");
+           connection = DBConnection.getConnection();
 
             // Call the stored procedure AddTransaction
             String sql = "{CALL AddTransaction(?, ?, ?, ?, ?, ?, ?)}";

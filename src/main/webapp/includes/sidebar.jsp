@@ -1,4 +1,4 @@
-
+ 
 
     <div
       id="view"
@@ -37,7 +37,7 @@
           </h1>
           <div id="profile" class="space-y-3">
             <img
-              src="https://www.gravatar.com/avatar?d=identicon&s=100"
+              src="/personal-finance-tracker/assets/img/avatar.png"
               alt="Avatar user"
               class="w-10 md:w-16 rounded-full mx-auto"
             />
@@ -45,7 +45,7 @@
               <h2
                 class="font-medium text-xs md:text-sm text-center text-teal-500"
               >
-               User
+               <%= session.getAttribute("fullname") %>
               </h2>
               <p class="text-xs text-gray-500 text-center">
               <%= session.getAttribute("user") %>
@@ -53,34 +53,17 @@
             </div>
           </div>
           <div
-            class="flex border-2 border-gray-200 rounded-md focus-within:ring-2 ring-teal-500"
+            class="flex rounded-md "
           >
-            <input
-              type="text"
-              class="w-full rounded-tl-md rounded-bl-md px-2 py-3 text-sm text-gray-600 focus:outline-none"
-              placeholder="Search"
-            />
-            <button
-              class="rounded-tr-md rounded-br-md px-2 py-3 hidden md:block"
-            >
-              <svg
-                class="w-4 h-4 fill-current"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                  clip-rule="evenodd"
-                ></path>
-              </svg>
-            </button>
+          
+          <a href="transaction.jsp" class="w-full text-center block text-sm font-medium py-2 px-2 bg-blue-500 text-white rounded-md transition duration-150 ease-in-out">Add Transaction</a>
+           
           </div>
           <div id="menu" class="flex flex-col space-y-2">
-            <a
+            <!--
+            	<a
               href="dashboard.jsp"
-              class="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-blue-500 hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out"
+              class="text-sm font-medium text-gray-700 py-1 px-2 hover:bg-blue-500 hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out"
             >
               <svg
                 class="w-6 h-6 fill-current inline-block"
@@ -94,9 +77,10 @@
               </svg>
               <span class="">Dashboard</span>
             </a>
+             -->
             <a
               href="accountShow.jsp"
-              class="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-blue-500 hover:text-white hover:scale-105 rounded-md transition duration-150 ease-in-out"
+              class="text-sm font-medium text-gray-700 py-1 px-2 hover:bg-blue-500 hover:text-white hover:scale-105 rounded-md transition duration-150 ease-in-out"
             >
               <svg
                 class="w-6 h-6 fill-current inline-block"
@@ -108,11 +92,11 @@
                   d="M11 17a1 1 0 001.447.894l4-2A1 1 0 0017 15V9.236a1 1 0 00-1.447-.894l-4 2a1 1 0 00-.553.894V17zM15.211 6.276a1 1 0 000-1.788l-4.764-2.382a1 1 0 00-.894 0L4.789 4.488a1 1 0 000 1.788l4.764 2.382a1 1 0 00.894 0l4.764-2.382zM4.447 8.342A1 1 0 003 9.236V15a1 1 0 00.553.894l4 2A1 1 0 009 17v-5.764a1 1 0 00-.553-.894l-4-2z"
                 ></path>
               </svg>
-              <span class="">View Accounts</span>
+              <span class="">Accounts</span>
             </a>
             <a
               href="transactionShow.jsp"
-              class="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-blue-500 hover:text-white hover:scale-105 rounded-md transition duration-150 ease-in-out"
+              class="text-sm font-medium text-gray-700 py-1 px-2 hover:bg-blue-500 hover:text-white hover:scale-105 rounded-md transition duration-150 ease-in-out"
             >
               <svg
                 class="w-6 h-6 fill-current inline-block"
@@ -127,11 +111,11 @@
                   clip-rule="evenodd"
                 ></path>
               </svg>
-              <span class="">View Transactions</span>
+              <span class="">Transactions</span>
             </a>
             <a
-              href="accountCreation.jsp"
-              class="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-blue-500 hover:text-white hover:scale-105 rounded-md transition duration-150 ease-in-out"
+              href="transferMoney.jsp"
+              class="text-sm font-medium text-gray-700 py-1 px-2 hover:bg-blue-500 hover:text-white hover:scale-105 rounded-md transition duration-150 ease-in-out"
             >
               <svg
                 class="w-6 h-6 fill-current inline-block"
@@ -146,49 +130,11 @@
                   d="M15 7v2a4 4 0 01-4 4H9.828l-1.766 1.767c.28.149.599.233.938.233h2l3 3v-3h2a2 2 0 002-2V9a2 2 0 00-2-2h-1z"
                 ></path>
               </svg>
-              <span class="">Create Account</span>
+              <span class="">Transfer Money</span>
             </a>
-            <a
-              href="transaction.jsp"
-              class="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-blue-500 hover:text-white hover:scale-105 rounded-md transition duration-150 ease-in-out"
-            >
-              <svg
-                class="w-6 h-6 fill-current inline-block"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
-                  clip-rule="evenodd"
-                ></path>
-              </svg>
-              <span class="">Add Transaction</span>
-            </a>
-            
-            <a
-              href="addGoal.jsp"
-              class="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-blue-500 hover:text-white hover:scale-105 rounded-md transition duration-150 ease-in-out"
-            >
-              <svg
-                class="w-6 h-6 fill-current inline-block"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
-                  clip-rule="evenodd"
-                ></path>
-              </svg>
-              <span class="">Add Goal</span>
-            </a>
-            
             <a
               href="listGoal.jsp"
-              class="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-blue-500 hover:text-white hover:scale-105 rounded-md transition duration-150 ease-in-out"
+              class="text-sm font-medium text-gray-700 py-1 px-2 hover:bg-blue-500 hover:text-white hover:scale-105 rounded-md transition duration-150 ease-in-out"
             >
               <svg
                 class="w-6 h-6 fill-current inline-block"
@@ -202,12 +148,12 @@
                   clip-rule="evenodd"
                 ></path>
               </svg>
-              <span class="">View Goals</span>
+              <span class="">Goals</span>
             </a>
             
             <a
               href="logout"
-              class="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-blue-500 hover:text-white hover:scale-105 rounded-md transition duration-150 ease-in-out"
+              class="text-sm font-medium text-gray-700 py-1 px-2 hover:bg-blue-500 hover:text-white hover:scale-105 rounded-md transition duration-150 ease-in-out"
             >
               <svg
                 class="w-6 h-6 fill-current inline-block"
